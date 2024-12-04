@@ -7,7 +7,7 @@ import { PrismaService } from 'src/prisma.service';
 export class ToysService {
   constructor(private readonly db: PrismaService){}
   create(createToyDto: CreateToyDto) {
-    return 'This action adds a new toy';
+    return this.db.toy.create({data: createToyDto});
   }
 
   findAll() {
@@ -22,8 +22,12 @@ export class ToysService {
     }
   }
 
-  update(id: number, updateToyDto: UpdateToyDto) {
-    return `This action updates a #${id} toy`;
+  async update(id: number, updateToyDto: UpdateToyDto) {
+    try{
+    return await this.db.toy.update({where: {id}, data: updateToyDto});
+    }catch{
+      return undefined;
+    }
   }
 
   async remove(id: number) {

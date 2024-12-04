@@ -4,7 +4,7 @@ const prisma = new PrismaClient()
 
 async function main(){
     
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 50; i++) {
     await prisma.toy.createMany({
         data: {
           name: faker.animal.type(),
@@ -19,7 +19,7 @@ async function main(){
     await prisma.children.create({
       data: {
         name: faker.person.fullName(),
-        addressfull: faker.location.streetAddress(),
+        addressfull: faker.location.streetAddress()+ ", "+ faker.location.country(),
         goodornot: true,
         toyId: faker.number.int({min:1, max:25}),
 
@@ -35,5 +35,5 @@ main()
   .catch(async (e) => {
     console.error(e)
     await prisma.$disconnect()
-    process.exit(1)
+    //process.exit(1)
   })

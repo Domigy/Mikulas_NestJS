@@ -28,8 +28,14 @@ export class ToysController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateToyDto: UpdateToyDto) {
-    return this.toysService.update(+id, updateToyDto);
+  async update(@Param('id') id: string, @Body() updateToyDto: UpdateToyDto) {
+    const siker =  await this.toysService.update(+id, updateToyDto);
+    if(siker){
+      return siker;
+    }
+    else{
+      throw new NotFoundException("Nincs ilyen id.")
+    }
   }
 
   @Delete(':id')
